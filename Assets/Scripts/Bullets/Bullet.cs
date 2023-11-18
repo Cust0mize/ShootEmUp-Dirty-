@@ -1,44 +1,35 @@
-using System;
 using UnityEngine;
+using System;
 
-namespace ShootEmUp
-{
-    public sealed class Bullet : MonoBehaviour
-    {
+namespace ShootEmUp {
+    public sealed class Bullet : MonoBehaviour {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
 
-        [NonSerialized] public bool isPlayer;
-        [NonSerialized] public int damage;
+        [field: SerializeField] public PoolType PoolType { get; private set; }
+        [field: SerializeField] public bool IsPlayer { get; private set; }
+        [field: SerializeField] public int Damage { get; private set; }
 
-        [SerializeField]
-        private new Rigidbody2D rigidbody2D;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private float _speedMove;
+        [SerializeField] private Color _color;
+        [SerializeField] private PhysicsLayer _layer;
 
-        [SerializeField]
-        private SpriteRenderer spriteRenderer;
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            this.OnCollisionEntered?.Invoke(this, collision);
+        private void Start() {
+            gameObject.layer = (int)_layer;
+            _spriteRenderer.color = _color;
         }
 
-        public void SetVelocity(Vector2 velocity)
-        {
-            this.rigidbody2D.velocity = velocity;
+        public void SetVelosity(Vector3 velocity) {
+            _rigidbody2D.velocity = velocity * _speedMove;
         }
 
-        public void SetPhysicsLayer(int physicsLayer)
-        {
-            this.gameObject.layer = physicsLayer;
+        public void SetPosition(Vector3 position) {
+            transform.position = position;
         }
 
-        public void SetPosition(Vector3 position)
-        {
-            this.transform.position = position;
-        }
-
-        public void SetColor(Color color)
-        {
-            this.spriteRenderer.color = color;
+        private void OnCollisionEnter2D(Collision2D collision) {
+            OnCollisionEntered?.Invoke(this, collision);
         }
     }
 }

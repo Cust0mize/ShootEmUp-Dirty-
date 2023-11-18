@@ -11,8 +11,8 @@ namespace Character {
             _moveComponent = _characterGO.GetComponent<MoveComponent>();
         }
 
-        public void TryMove(float horizontal) {
-            _moveDirection = horizontal;
+        public void TryMove(float horizontalDirectional) {
+            _moveDirection = horizontalDirectional;
         }
 
         private void FixedUpdate() {

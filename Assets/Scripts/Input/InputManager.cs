@@ -3,18 +3,15 @@ using Character;
 
 namespace ShootEmUp {
     public sealed class InputManager : MonoBehaviour {
-        [SerializeField] private CharacterMoveController _characterMoveController;
-
-        [SerializeField]
-        private CharacterController characterController;
+        [SerializeField] private CharacterWeaponController _characterWeaponController;
+        [SerializeField] private CharacterMoveController _characterMoveControlle;
 
         private void Update() {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                characterController._fireRequired = true;
+                _characterWeaponController.OnFlyBullet();
             }
-
             var horizontal = Input.GetAxisRaw("Horizontal");
-            _characterMoveController.TryMove(horizontal);
+            _characterMoveControlle.TryMove(horizontal);
         }
     }
 }

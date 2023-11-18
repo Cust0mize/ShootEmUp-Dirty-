@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3951101991959698325}
   - component: {fileID: 201757604187811891}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,10 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f04ddcf68e44c1b95a5d6ea04d1a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PoolType>k__BackingField: 1
+  <IsPlayer>k__BackingField: 0
+  <Damage>k__BackingField: 1
   _spriteRenderer: {fileID: 407317769854222589}
   _rigidbody2D: {fileID: 3555983760417175357}
-  <Damage>k__BackingField: 1
-  <IsPlayer>k__BackingField: 1
-  _speedMove: 8
-  _color: {r: 0, g: 0.0888114, b: 1, a: 1}
-  _layer: 14
+  _speedMove: 5
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _layer: 13
