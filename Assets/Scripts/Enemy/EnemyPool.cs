@@ -31,10 +31,10 @@ namespace ShootEmUp {
 
             enemy.transform.SetParent(worldTransform);
 
-            var spawnPosition = enemyPositions.RandomSpawnPosition();
+            var spawnPosition = enemyPositions.GetRandomSpawnPoint();
             enemy.transform.position = spawnPosition.position;
 
-            var attackPosition = enemyPositions.RandomAttackPosition();
+            var attackPosition = enemyPositions.RandomAttackPosition(enemy);
             enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
 
             enemy.GetComponent<EnemyAttackAgent>().SetTarget(character);

@@ -2,6 +2,7 @@
 
 namespace ShootEmUp {
     public class EnemyCreateAndDestroyController : MonoBehaviour {
+        [SerializeField] private EnemyPositions _enemyPositions;
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private EnemyPool _enemyPool;
 
@@ -21,6 +22,7 @@ namespace ShootEmUp {
 
         private void EnemyDestroy(GameObject enemy) {
             enemy.GetComponent<HitPointsComponent>().SetDefaultValue();
+            _enemyPositions.ReleasePosition(enemy);
             _enemyPool.UnspawnEnemy(enemy);
         }
     }
