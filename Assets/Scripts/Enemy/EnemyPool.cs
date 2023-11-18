@@ -1,44 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace ShootEmUp {
     public sealed class EnemyPool : MonoBehaviour {
-        [Header("Spawn")]
-        [SerializeField] private EnemyPositions _enemyPositions;
-
-        [SerializeField] private GameObject _character;
-
-        [SerializeField] private Transform _worldTransform;
-
-        [Header("Pool")]
+        [SerializeField] private GameObjectCreator _gameObjectCreator;
+        [SerializeField] private EnemyInstaller _enemyInstaller;
         [SerializeField] private Transform _container;
-
         [SerializeField] private GameObject _prefab;
+        [SerializeField] private int _pullSize = 7;
 
         private readonly Queue<GameObject> _enemyPool = new();
+        public event Action<GameObject> OnCreateEnemy;
 
         private void Awake() {
-            for (var i = 0; i < 7; i++) {
-                var enemy = Instantiate(_prefab, _container);
-                _enemyPool.Enqueue(enemy);
-            }
+            _gameObjectCreator.CreateObjectAndAddPool(_enemyPool, _prefab, _pullSize, _container);
         }
 
-        public GameObject SpawnEnemy() {
+        public GameObject GetEnemyFromPool() {
             if (!_enemyPool.TryDequeue(out var enemy)) {
                 return null;
             }
-
-            enemy.transform.SetParent(_worldTransform);
-
-            var spawnPosition = _enemyPositions.GetRandomSpawnPoint();
-            enemy.transform.position = spawnPosition.position;
-
-            var attackPosition = _enemyPositions.RandomAttackPosition(enemy);
-            enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
-
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(_character.GetComponent<HitPointsComponent>());
-            return enemy;
+            return _enemyInstaller.EnemyInstance(enemy);
         }
 
         public void UnspawnEnemy(GameObject enemy) {

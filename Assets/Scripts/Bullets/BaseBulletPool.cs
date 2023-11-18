@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp {
     public abstract class BaseBulletPool : MonoBehaviour {
+        [SerializeField] private GameObjectCreator _gameObjectCreator;
         public abstract PoolType PoolType { get; }
         [field: SerializeField] public Transform Container { get; private set; }
         [field: SerializeField] public Bullet Prefab { get; private set; }
@@ -12,10 +13,7 @@ namespace ShootEmUp {
         private readonly Queue<Bullet> _bulletPool = new();
 
         private void Awake() {
-            for (var i = 0; i < _initialCount; i++) {
-                var bullet = Instantiate(Prefab, Container);
-                _bulletPool.Enqueue(bullet);
-            }
+            _gameObjectCreator.CreateObjectAndAddPool(_bulletPool, Prefab, _initialCount, Container);
         }
 
         public Bullet CreateBullet(Bullet prefab, Transform container) {

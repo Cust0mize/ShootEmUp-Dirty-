@@ -17,7 +17,7 @@ namespace ShootEmUp {
         }
 
         private GameObject EnemyCreate() {
-            return _enemyPool.SpawnEnemy();
+            return _enemyPool.GetEnemyFromPool();
         }
 
         private void EnemyDestroy(GameObject enemy) {
