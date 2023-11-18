@@ -1,0 +1,27 @@
+﻿using UnityEngine;
+
+namespace ShootEmUp {
+    public class EnemyCreateAndDestroyController : MonoBehaviour {
+        [SerializeField] private EnemyManager _enemyManager;
+        [SerializeField] private EnemyPool _enemyPool;
+
+        private void Start() {
+            _enemyManager.EnemyOnDestroy += EnemyDestroy;
+            _enemyManager.EnemyOnCreate += EnemyCreate;
+        }
+
+        private void OnDestroy() {
+            _enemyManager.EnemyOnDestroy -= EnemyDestroy;
+            _enemyManager.EnemyOnCreate -= EnemyCreate;
+        }
+
+        private GameObject EnemyCreate() {
+            return _enemyPool.SpawnEnemy();
+        }
+
+        private void EnemyDestroy(GameObject enemy) {
+            enemy.GetComponent<HitPointsComponent>().SetDefaultValue();
+            _enemyPool.UnspawnEnemy(enemy);
+        }
+    }
+}

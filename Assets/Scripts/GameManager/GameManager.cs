@@ -1,7 +1,6 @@
 using UnityEngine;
 
-namespace ShootEmUp
-{
+namespace ShootEmUp {
     public sealed class GameManager : MonoBehaviour
     {
         public void FinishGame()
