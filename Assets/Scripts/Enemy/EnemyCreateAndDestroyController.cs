@@ -21,7 +21,7 @@ namespace ShootEmUp {
         }
 
         private void EnemyDestroy(GameObject enemy) {
-            enemy.GetComponent<HitPointsComponent>().SetDefaultValue();
+            enemy.GetComponent<EnemyContainer>().SetDefaultValue();
             _enemyPositions.ReleasePosition(enemy);
             _enemyPool.UnspawnEnemy(enemy);
         }

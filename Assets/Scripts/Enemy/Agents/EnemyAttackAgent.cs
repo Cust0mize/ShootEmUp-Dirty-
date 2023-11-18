@@ -1,43 +1,50 @@
 using UnityEngine;
 
 namespace ShootEmUp {
-    public sealed class EnemyAttackAgent : MonoBehaviour {
+    public sealed class EnemyAttackAgent : MonoBehaviour, IRebootComponent {
+        [SerializeField] private WeaponComponent _weaponComponent;
+        [SerializeField] private float _countdown;
         public delegate void FireHandler(Bullet bullet, Vector2 position, Vector2 direction);
-
         public event FireHandler OnFire;
 
-        [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private EnemyMoveAgent moveAgent;
-        [SerializeField] private float countdown;
+        private HitPointsComponent _target;
+        private float _currentTime;
+        private bool _canAttack;
 
-        private GameObject target;
-        private float currentTime;
+        public void SetTarget(HitPointsComponent target) {
+            if (!target) {
+                return;
+            }
+            _target = target;
+        }
 
-        public void SetTarget(GameObject target) {
-            this.target = target;
+        public void StartAttack() {
+            _canAttack = true;
+        }
+
+        public void SetDefaultValue() {
+            _canAttack = false;
+            _currentTime = 0;
         }
 
         private void FixedUpdate() {
-            if (!moveAgent.IsReached) {
+            if (!_canAttack) {
                 return;
             }
 
-            if (!target.GetComponent<HitPointsComponent>().IsHitPointsExists()) {
+            if (!_target.IsHitPointsExists()) {
                 return;
             }
 
-            currentTime -= Time.fixedDeltaTime;
-            if (currentTime <= 0) {
+            _currentTime -= Time.fixedDeltaTime;
+            if (_currentTime <= 0) {
                 Fire();
-                currentTime += countdown;
+                _currentTime += _countdown;
             }
         }
 
         private void Fire() {
-            var startPosition = weaponComponent.Position;
-            var vector = (Vector2)target.transform.position - startPosition;
-            var direction = vector.normalized;
-            OnFire?.Invoke(weaponComponent._bullet, startPosition, direction);
+            OnFire?.Invoke(_weaponComponent._bullet, _weaponComponent.Position, _target.transform.position);
         }
     }
 }

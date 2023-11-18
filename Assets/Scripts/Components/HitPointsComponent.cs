@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class HitPointsComponent : MonoBehaviour {
+    public sealed class HitPointsComponent : MonoBehaviour, IRebootComponent {
         public event Action<GameObject> HpEmpty;
 
         [SerializeField] private int _hitPoints = 5;

@@ -39,8 +39,10 @@ namespace ShootEmUp {
             }
         }
 
-        private void OnFire(Bullet bulletElement, Vector2 position, Vector2 direction) {
-            _bulletSystem.FlyBullet(bulletElement, position, direction);
+        private void OnFire(Bullet bulletElement, Vector2 startPosition, Vector2 targetPosition) {
+            var vector = targetPosition - startPosition;
+            var direction = vector.normalized;
+            _bulletSystem.FlyBullet(bulletElement, startPosition, direction);
         }
     }
 }
