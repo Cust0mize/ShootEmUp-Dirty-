@@ -11,9 +11,9 @@ namespace ShootEmUp {
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private PhysicsLayer _layer;
         [SerializeField] private float _speedMove;
         [SerializeField] private Color _color;
-        [SerializeField] private PhysicsLayer _layer;
 
         private void Start() {
             gameObject.layer = (int)_layer;
