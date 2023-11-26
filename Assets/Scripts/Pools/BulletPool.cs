@@ -12,7 +12,7 @@ namespace ShootEmUp {
 
         private void Awake() {
             for (int i = 0; i < _initialCount; i++) {
-                _bulletPool.Enqueue(Instantiate(Prefab, Container));
+                _bulletPool.Enqueue(CreateNewBullet(Container));
             }
         }
 
