@@ -10,7 +10,9 @@ namespace ShootEmUp {
         }
 
         private void OnDestroy() {
-            _characterGO.GetComponent<HitPointsComponent>().HpEmpty -= EndGame;
+            if (_characterGO != null) {
+                _characterGO.GetComponent<HitPointsComponent>().HpEmpty -= EndGame;
+            }
         }
 
         private void EndGame(GameObject gameObject) {

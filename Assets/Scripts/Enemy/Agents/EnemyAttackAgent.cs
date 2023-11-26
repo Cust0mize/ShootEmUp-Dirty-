@@ -4,12 +4,15 @@ namespace ShootEmUp {
     public sealed class EnemyAttackAgent : MonoBehaviour, IRebootComponent {
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private float _countdown;
-        public delegate void FireHandler(BulletConfig bulletConfig, Vector2 position, Vector2 direction);
-        public event FireHandler OnFire;
+        private BulletSystem _bulletSystem;
 
         private HitPointsComponent _target;
         private float _currentTime;
         private bool _canAttack;
+
+        private void Start() {
+            _bulletSystem = FindObjectOfType<BulletSystem>();
+        }
 
         public void SetTarget(HitPointsComponent target) {
             if (!target) {
@@ -44,7 +47,9 @@ namespace ShootEmUp {
         }
 
         private void Fire() {
-            OnFire?.Invoke(_weaponComponent.BulletConfig, _weaponComponent.Position, _target.transform.position);
+            var vector = (Vector2)_target.transform.position - _weaponComponent.Position;
+            var direction = vector.normalized;
+            _bulletSystem.FlyBullet(_weaponComponent.BulletConfig, _weaponComponent.Position, direction);
         }
     }
 }
