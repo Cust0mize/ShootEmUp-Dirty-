@@ -4,7 +4,7 @@ namespace ShootEmUp {
     public sealed class EnemyAttackAgent : MonoBehaviour, IRebootComponent {
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private float _countdown;
-        public delegate void FireHandler(Bullet bullet, Vector2 position, Vector2 direction);
+        public delegate void FireHandler(BulletConfig bulletConfig, Vector2 position, Vector2 direction);
         public event FireHandler OnFire;
 
         private HitPointsComponent _target;
@@ -44,7 +44,7 @@ namespace ShootEmUp {
         }
 
         private void Fire() {
-            OnFire?.Invoke(_weaponComponent._bullet, _weaponComponent.Position, _target.transform.position);
+            OnFire?.Invoke(_weaponComponent.BulletConfig, _weaponComponent.Position, _target.transform.position);
         }
     }
 }

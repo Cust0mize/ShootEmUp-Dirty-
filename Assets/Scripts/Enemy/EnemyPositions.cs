@@ -7,7 +7,7 @@ namespace ShootEmUp {
         [SerializeField] private Transform[] _attackPositions;
         [SerializeField] private Transform[] _spawnPositions;
 
-        private Dictionary<Transform, GameObject> _fillPositions = new Dictionary<Transform, GameObject>();
+        private readonly Dictionary<Transform, GameObject> _fillPositions = new();
 
         public Transform RandomSpawnPosition() {
             return GetRandomSpawnPoint();
@@ -23,7 +23,7 @@ namespace ShootEmUp {
         }
 
         private Transform RandomTransform(Transform[] points, GameObject enemy) {
-            int index = 0;
+            int index;
             Transform targetPosition;
             int tryCount = 0;
 

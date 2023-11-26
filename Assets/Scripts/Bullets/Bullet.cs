@@ -5,19 +5,21 @@ namespace ShootEmUp {
     public sealed class Bullet : MonoBehaviour {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
 
-        [field: SerializeField] public PoolType PoolType { get; private set; }
-        [field: SerializeField] public bool IsPlayer { get; private set; }
-        [field: SerializeField] public int Damage { get; private set; }
+        public bool IsPlayer { get; private set; }
+        public int Damage { get; private set; }
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
-        [SerializeField] private PhysicsLayer _layer;
-        [SerializeField] private float _speedMove;
-        [SerializeField] private Color _color;
+        private PhysicsLayer _layer;
+        private float _speedMove;
+        private Color _color;
 
-        private void Start() {
-            gameObject.layer = (int)_layer;
-            _spriteRenderer.color = _color;
+        public void Init(BulletConfig bulletConfig) {
+            gameObject.layer = (int)bulletConfig.PhysicsLayer;
+            _spriteRenderer.color = bulletConfig.Color;
+            IsPlayer = bulletConfig.IsPlayer;
+            _speedMove = bulletConfig.Speed;
+            Damage = bulletConfig.Damage;
         }
 
         public void SetVelosity(Vector3 velocity) {

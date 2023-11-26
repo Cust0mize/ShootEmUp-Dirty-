@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce164c84a74a425f8d2e82764aef9e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_bullet>k__BackingField: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d,
-    type: 3}
+  <BulletConfig>k__BackingField: {fileID: 11400000, guid: d1a6b1f0ce2e17b42a7b3f8a7a6c996f,
+    type: 2}
   _firePoint: {fileID: 3926786963072264220}
 --- !u!114 &3926786964091724597
 MonoBehaviour:
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34813dd88e2c824587588fa0990294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletConfig: {fileID: 11400000, guid: d1a6b1f0ce2e17b42a7b3f8a7a6c996f, type: 2}
   _characterGO: {fileID: 809540891661548873}
 --- !u!1 &3926786963072264211
 GameObject:

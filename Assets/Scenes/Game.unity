@@ -226,7 +226,6 @@ GameObject:
   m_Component:
   - component: {fileID: 363245576}
   - component: {fileID: 363245577}
-  - component: {fileID: 363245579}
   - component: {fileID: 363245578}
   m_Layer: 0
   m_Name: BulletSystem
@@ -248,7 +247,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1831741369}
-  - {fileID: 857284088}
   m_Father: {fileID: 3951702117947426122}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -265,6 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _worldTransform: {fileID: 1683128698}
+  _bulletsPool: {fileID: 363245578}
 --- !u!114 &363245578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,31 +273,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 363245575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7ab12bd64e1b944bcb64b69ae61544, type: 3}
+  m_Script: {fileID: 11500000, guid: fe57533d336b24a4186431da10b50923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObjectCreator: {fileID: 3951702117947426125}
-  <Container>k__BackingField: {fileID: 857284088}
-  <Prefab>k__BackingField: {fileID: 201757604187811891, guid: 5473bc48c3786f04e8e473bd09cb8457,
-    type: 3}
-  _initialCount: 50
---- !u!114 &363245579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363245575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4746214a94f2b37418004bcee3ef6261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameObjectCreator: {fileID: 3951702117947426125}
   <Container>k__BackingField: {fileID: 1831741369}
   <Prefab>k__BackingField: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d,
     type: 3}
-  _initialCount: 5
+  _initialCount: 10
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdcdf257e0242258e7a67fe13d80e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObjectCreator: {fileID: 3951702117947426125}
   _enemyInstaller: {fileID: 562298208}
   _container: {fileID: 178513672}
   _prefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
@@ -464,37 +444,6 @@ MonoBehaviour:
   _enemyPositions: {fileID: 7166351703523243261}
   _characterGO: {fileID: 4414282821800802397}
   _worldTransform: {fileID: 1683128698}
---- !u!1 &857284087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 857284088}
-  m_Layer: 0
-  m_Name: Enemy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &857284088
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857284087}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 363245576}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831741369}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -998,8 +947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!1 &2395466870357280814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,8 +1139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!212 &3859180527646937201
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1602,8 +1547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!1 &5367402353523150177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,8 +1672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!1 &5887992278705979923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,8 +1701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!4 &5897317814060027325
 Transform:
   m_ObjectHideFlags: 0
@@ -1804,8 +1743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebff4652dafd8ba488bf4d403619cfc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PositionNumber>k__BackingField: 0
-  <IsFill>k__BackingField: 0
 --- !u!4 &6563466540960878063
 Transform:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using System;
 
 namespace ShootEmUp {
     public sealed class EnemyPool : MonoBehaviour {
-        [SerializeField] private GameObjectCreator _gameObjectCreator;
         [SerializeField] private EnemyInstaller _enemyInstaller;
         [SerializeField] private Transform _container;
         [SerializeField] private GameObject _prefab;
@@ -14,7 +13,9 @@ namespace ShootEmUp {
         public event Action<GameObject> OnCreateEnemy;
 
         private void Awake() {
-            _gameObjectCreator.CreateObjectAndAddPool(_enemyPool, _prefab, _pullSize, _container);
+            for (int i = 0; i < _pullSize; i++) {
+                _enemyPool.Enqueue(Instantiate(_prefab, _container));
+            }
         }
 
         public GameObject GetEnemyFromPool() {

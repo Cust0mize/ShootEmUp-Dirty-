@@ -1,31 +1,22 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp {
     public sealed class BulletSystem : MonoBehaviour {
-        private Dictionary<PoolType, BaseBulletPool> _bulletsPool = new Dictionary<PoolType, BaseBulletPool>();
         [SerializeField] private Transform _worldTransform;
+        [SerializeField] private BulletPool _bulletsPool;
 
-        private void Awake() {
-            var bulletsPools = FindObjectsOfType<BaseBulletPool>();
-
-            foreach (var item in bulletsPools) {
-                _bulletsPool.Add(item.PoolType, item);
-            }
-        }
-
-        public void FlyBullet(Bullet bulletElement, Vector2 position, Vector2 direction) {
-            if (_bulletsPool[bulletElement.PoolType].PoolTryDequeue(out var bullet)) {
+        public void FlyBullet(BulletConfig bulletConfig, Vector2 position, Vector2 direction) {
+            if (_bulletsPool.PoolTryDequeue(out var bullet)) {
                 bullet.transform.SetParent(_worldTransform);
             }
             else {
-                bullet = _bulletsPool[bulletElement.PoolType].CreateBullet(bulletElement, _worldTransform);
+                bullet = _bulletsPool.CreateNewBullet(_worldTransform);
             }
-
+            bullet.Init(bulletConfig);
             bullet.SetPosition(position);
             bullet.SetVelosity(direction);
 
-            if (_bulletsPool[bulletElement.PoolType].ActiveBulletsAdd(bullet)) {
+            if (_bulletsPool.ActiveBulletsAdd(bullet)) {
                 bullet.OnCollisionEntered += OnBulletCollision;
             }
         }
@@ -36,10 +27,10 @@ namespace ShootEmUp {
         }
 
         private void RemoveBullet(Bullet bullet) {
-            if (_bulletsPool[bullet.PoolType].ActiveBulletsRemove(bullet)) {
+            if (_bulletsPool.ActiveBulletsRemove(bullet)) {
                 bullet.OnCollisionEntered -= OnBulletCollision;
-                bullet.transform.SetParent(_bulletsPool[bullet.PoolType].Container);
-                _bulletsPool[bullet.PoolType].PoolEnqueue(bullet);
+                bullet.transform.SetParent(_bulletsPool.Container);
+                _bulletsPool.PoolEnqueue(bullet);
             }
         }
     }

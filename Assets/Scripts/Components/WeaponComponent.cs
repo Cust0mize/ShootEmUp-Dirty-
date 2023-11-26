@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp {
     public sealed class WeaponComponent : MonoBehaviour {
-        [field: SerializeField] public Bullet _bullet { get; private set; }
+        [field: SerializeField] public BulletConfig BulletConfig { get; private set; }
         [SerializeField] private Transform _firePoint;
 
         public Vector2 Position {

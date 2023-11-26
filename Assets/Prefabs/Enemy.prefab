@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce164c84a74a425f8d2e82764aef9e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_bullet>k__BackingField: {fileID: 201757604187811891, guid: 5473bc48c3786f04e8e473bd09cb8457,
-    type: 3}
+  <BulletConfig>k__BackingField: {fileID: 11400000, guid: 66507afc537ea0541a8e0e885d630320,
+    type: 2}
   _firePoint: {fileID: 3195880656587174614}
 --- !u!114 &8186052948131603766
 MonoBehaviour:
