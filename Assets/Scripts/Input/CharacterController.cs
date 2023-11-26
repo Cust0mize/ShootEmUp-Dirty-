@@ -22,7 +22,7 @@ namespace ShootEmUp {
         }
 
         private void Move(float direction) {
-            _characterMoveControlle.TryMove(direction);
+            _characterMoveControlle.SetMoveDirection(direction);
         }
     }
 }

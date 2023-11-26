@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace ShootEmUp {
-    public class EnemyAttackController : MonoBehaviour {
+    public class EnemyCompliteMoveObserver : MonoBehaviour {
         [SerializeField] private EnemyAttackAgent _enemyAttackAgent;
         [SerializeField] private EnemyMoveAgent _enemyMoveAgent;
 

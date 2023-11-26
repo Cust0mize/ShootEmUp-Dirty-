@@ -2,17 +2,15 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class Bullet : MonoBehaviour {
-        public event Action<Bullet, Collision2D> OnCollisionEntered;
+    public sealed class Bullet : MonoBehaviour, IDestroyToBorder {
+        public event Action<Bullet> OnCollisionEntered;
 
         public bool IsPlayer { get; private set; }
         public int Damage { get; private set; }
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
-        private PhysicsLayer _layer;
         private float _speedMove;
-        private Color _color;
 
         public void Init(BulletConfig bulletConfig) {
             gameObject.layer = (int)bulletConfig.PhysicsLayer;
@@ -31,7 +29,23 @@ namespace ShootEmUp {
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {
-            OnCollisionEntered?.Invoke(this, collision);
+            if (!collision.transform.TryGetComponent(out TeamComponent team)) {
+                return;
+            }
+
+            if (IsPlayer == team.IsPlayer) {
+                return;
+            }
+
+            if (collision.transform.TryGetComponent(out HitPointsComponent hitPoints)) {
+                hitPoints.TakeDamage(Damage);
+            }
+
+            Destroy();
+        }
+
+        public void Destroy() {
+            OnCollisionEntered?.Invoke(this);
         }
     }
 }
