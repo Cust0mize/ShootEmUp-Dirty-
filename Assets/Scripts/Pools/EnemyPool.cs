@@ -14,7 +14,9 @@ namespace ShootEmUp {
 
         private void Awake() {
             for (int i = 0; i < _pullSize; i++) {
-                _enemyPool.Enqueue(Instantiate(_prefab, _container));
+                var enemy = Instantiate(_prefab, _container);
+                _enemyPool.Enqueue(enemy);
+                OnCreateEnemy?.Invoke(enemy);
             }
         }
 

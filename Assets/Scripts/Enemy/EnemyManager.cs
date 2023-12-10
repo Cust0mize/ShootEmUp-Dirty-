@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class EnemyManager : MonoBehaviour {
+    public sealed class EnemyManager : MonoBehaviour, IGameStartListner, IFinishGameListner, IGamePauseListner, IResumeGameListner {
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private int _spawnTime = 1;
 
@@ -14,8 +14,20 @@ namespace ShootEmUp {
         public delegate GameObject FireHandler();
         public event FireHandler EnemyOnCreate;
 
-        private void Start() {
+        public void OnStartGame() {
             StartCoroutine(EnemyCreated());
+        }
+
+        public void OnResumeGame() {
+            StartCoroutine(EnemyCreated());
+        }
+
+        public void OnPauseGame() {
+            StopAllCoroutines();
+        }
+
+        public void FinishGame() {
+            StopAllCoroutines();
         }
 
         private IEnumerator EnemyCreated() {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp {
@@ -9,16 +10,20 @@ namespace ShootEmUp {
 
         private readonly HashSet<Bullet> _activeBullets = new();
         private readonly Queue<Bullet> _bulletPool = new();
+        public event Action<Bullet> OnBulletCreate;
 
         private void Awake() {
             for (int i = 0; i < _initialCount; i++) {
-                _bulletPool.Enqueue(Instantiate(Prefab, Container));
+                var bullet = Instantiate(Prefab, Container);
+                _bulletPool.Enqueue(bullet);
+                OnBulletCreate?.Invoke(bullet);
             }
         }
 
         public Bullet GetOrCreateBullet(Transform container) {
             if (!_bulletPool.TryDequeue(out var bullet)) {
                 bullet = Instantiate(Prefab, container);
+                OnBulletCreate?.Invoke(bullet);
             }
             bullet.transform.SetParent(container);
             return bullet;

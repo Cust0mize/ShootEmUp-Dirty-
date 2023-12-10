@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace ShootEmUp {
     public class EnemyCreateAndDestroyController : MonoBehaviour {
         [SerializeField] private EnemyPositions _enemyPositions;
         [SerializeField] private EnemyManager _enemyManager;
+        [SerializeField] private GameManager _gameManager;
         [SerializeField] private EnemyPool _enemyPool;
 
         private void Start() {
@@ -17,7 +19,9 @@ namespace ShootEmUp {
         }
 
         private GameObject EnemyCreate() {
-            return _enemyPool.GetEnemyFromPool();
+            var enemy = _enemyPool.GetEnemyFromPool();
+            _gameManager.AddListners(enemy.GetComponents<IGameLisnter>().ToHashSet());
+            return enemy;
         }
 
         private void EnemyDestroy(GameObject enemy) {

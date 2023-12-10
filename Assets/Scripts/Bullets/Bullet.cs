@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class Bullet : MonoBehaviour, IDestroyToBorder {
+    public sealed class Bullet : MonoBehaviour, IDestroyToBorder, IGamePauseListner, IResumeGameListner, IFinishGameListner {
         public event Action<Bullet> OnCollisionEntered;
 
         public bool IsPlayer { get; private set; }
@@ -11,6 +11,7 @@ namespace ShootEmUp {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         private float _speedMove;
+        private Vector2 _oldVelocity;
 
         public void Init(BulletConfig bulletConfig) {
             gameObject.layer = (int)bulletConfig.PhysicsLayer;
@@ -26,6 +27,21 @@ namespace ShootEmUp {
 
         public void SetPosition(Vector3 position) {
             transform.position = position;
+        }
+
+        public void OnPauseGame() {
+            _oldVelocity = _rigidbody2D.velocity;
+            _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.isKinematic = true;
+        }
+
+        public void OnResumeGame() {
+            _rigidbody2D.velocity = _oldVelocity;
+            _rigidbody2D.isKinematic = false;
+        }
+
+        public void FinishGame() {
+            OnCollisionEntered?.Invoke(this);
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {
