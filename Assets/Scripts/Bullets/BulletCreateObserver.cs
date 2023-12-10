@@ -12,5 +12,9 @@ namespace ShootEmUp {
         private void AddNewListner(Bullet bullet) {
             _gameManager.AddLisnter(bullet);
         }
+
+        private void OnDestroy() {
+            _bulletPool.OnBulletCreate -= AddNewListner;
+        }
     }
 }

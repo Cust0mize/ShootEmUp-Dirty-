@@ -7,12 +7,12 @@ namespace ShootEmUp {
         [SerializeField] private CharacterMoveController _characterMoveControlle;
         [SerializeField] private InputSystem _inputSystem;
 
-        private void OnEnable() {
+        private void Start() {
             _inputSystem.OnFire += Fire;
             _inputSystem.OnMove += Move;
         }
 
-        private void OnDisable() {
+        private void OnDestroy() {
             _inputSystem.OnFire -= Fire;
             _inputSystem.OnMove -= Move;
         }

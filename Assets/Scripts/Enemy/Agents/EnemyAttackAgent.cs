@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace ShootEmUp {
-    public sealed class EnemyAttackAgent : MonoBehaviour, IRebootComponent, IGamePauseListner, IResumeGameListner, IFinishGameListner {
+    public sealed class EnemyAttackAgent : MonoBehaviour, IRebootComponent, IGamePauseListner, IResumeGameListner, IFinishGameListner, IFixedUpdateListner {
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private float _countdown;
         private BulletSystem _bulletSystem;
@@ -9,6 +9,9 @@ namespace ShootEmUp {
         private HitPointsComponent _target;
         private float _currentTime;
         private bool _canAttack;
+
+        public bool IsEnable => _isEnable;
+        private bool _isEnable;
 
         private void Start() {
             _bulletSystem = FindObjectOfType<BulletSystem>();
@@ -31,18 +34,22 @@ namespace ShootEmUp {
         }
 
         public void FinishGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
         public void OnResumeGame() {
-            enabled = true;
+            _isEnable = true;
         }
 
         public void OnPauseGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
-        private void FixedUpdate() {
+        public void FixedUpdateGame(float time) {
+            if (!_isEnable) {
+                return;
+            }
+
             if (!_canAttack) {
                 return;
             }

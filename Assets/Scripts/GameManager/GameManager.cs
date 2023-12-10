@@ -7,21 +7,12 @@ namespace ShootEmUp {
         private List<IFinishGameListner> _iFinishGameListner = new();
         private List<IGameStartListner> _iGameStartListner = new();
         private List<IGamePauseListner> _iGamePauseListner = new();
+        private List<IFixedUpdateListner> _iGameFixedUpdate = new();
+        private List<IUpdateListner> _iGameUpdate = new();
 
         public void AddListners(HashSet<IGameLisnter> listetr) {
             foreach (var item in listetr) {
-                if (item is IGameStartListner start) {
-                    _iGameStartListner.Add(start);
-                }
-                if (item is IGamePauseListner pause) {
-                    _iGamePauseListner.Add(pause);
-                }
-                if (item is IFinishGameListner finih) {
-                    _iFinishGameListner.Add(finih);
-                }
-                if (item is IResumeGameListner resume) {
-                    _iResumeGameListner.Add(resume);
-                }
+                AddLisnter(item);
             }
         }
 
@@ -38,31 +29,48 @@ namespace ShootEmUp {
             if (gameLisnter is IResumeGameListner resume) {
                 _iResumeGameListner.Add(resume);
             }
-        }
-
-        public void FinishGame() {
-            Debug.Log("Game over!");
-
-            foreach (var item in _iFinishGameListner) {
-                item.FinishGame();
+            if (gameLisnter is IUpdateListner update) {
+                _iGameUpdate.Add(update);
+            }
+            if (gameLisnter is IFixedUpdateListner fixedUpdate) {
+                _iGameFixedUpdate.Add(fixedUpdate);
             }
         }
 
+        public void FinishGame() {
+            for (int i = 0; i < _iFinishGameListner.Count; i++) {
+                _iFinishGameListner[i].FinishGame();
+            }
+            Debug.Log("Game over!");
+        }
+
         public void PauseGame() {
-            foreach (var item in _iGamePauseListner) {
-                item.OnPauseGame();
+            for (int i = 0; i < _iGamePauseListner.Count; i++) {
+                _iGamePauseListner[i].OnPauseGame();
             }
         }
 
         public void StartGame() {
-            foreach (var item in _iGameStartListner) {
-                item.OnStartGame();
+            for (int i = 0; i < _iGameStartListner.Count; i++) {
+                _iGameStartListner[i].OnStartGame();
             }
         }
 
         public void ResumeGame() {
-            foreach (var item in _iResumeGameListner) {
-                item.OnResumeGame();
+            for (int i = 0; i < _iResumeGameListner.Count; i++) {
+                _iResumeGameListner[i].OnResumeGame();
+            }
+        }
+
+        private void Update() {
+            for (int i = 0; i < _iGameUpdate.Count; i++) {
+                _iGameUpdate[i].UpdateGame(Time.deltaTime);
+            }
+        }
+
+        private void FixedUpdate() {
+            for (int i = 0; i < _iGameFixedUpdate.Count; i++) {
+                _iGameFixedUpdate[i].FixedUpdateGame(Time.fixedDeltaTime);
             }
         }
     }

@@ -17,4 +17,14 @@ namespace ShootEmUp {
 
     public interface IGameLisnter {
     }
+
+    public interface IUpdateListner : IGameLisnter {
+        public bool IsEnable { get; }
+        public void UpdateGame(float time);
+    }
+
+    public interface IFixedUpdateListner : IGameLisnter {
+        public bool IsEnable { get; }
+        public void FixedUpdateGame(float time);
+    }
 }

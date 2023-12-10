@@ -2,15 +2,18 @@
 using System;
 
 namespace ShootEmUp {
-    public class InputSystem : MonoBehaviour, IGameStartListner, IGamePauseListner, IFinishGameListner, IResumeGameListner {
-        public event Action OnFire;
+    public class InputSystem : MonoBehaviour, IGameStartListner, IGamePauseListner, IFinishGameListner, IResumeGameListner, IUpdateListner {
         public event Action<float> OnMove;
+        public event Action OnFire;
+        private bool _isEnable;
 
-        private void Awake() {
-            enabled = false;
-        }
+        public bool IsEnable => _isEnable;
 
-        private void Update() {
+        public void UpdateGame(float time) {
+            if (!IsEnable) {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space)) {
                 OnFire?.Invoke();
             }
@@ -19,19 +22,19 @@ namespace ShootEmUp {
         }
 
         public void OnResumeGame() {
-            enabled = true;
+            _isEnable = true;
         }
 
         public void FinishGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
         public void OnPauseGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
         public void OnStartGame() {
-            enabled = true;
+            _isEnable = true;
         }
     }
 }

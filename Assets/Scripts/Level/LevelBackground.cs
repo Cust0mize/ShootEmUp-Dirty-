@@ -2,10 +2,12 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class LevelBackground : MonoBehaviour, IGameStartListner, IGamePauseListner, IResumeGameListner, IFinishGameListner {
+    public sealed class LevelBackground : MonoBehaviour, IGameStartListner, IGamePauseListner, IResumeGameListner, IFinishGameListner, IUpdateListner {
+        public bool IsEnable { get => _isEnable; }
         [SerializeField] private Params _params;
         private Transform _myTransform;
 
+        private bool _isEnable;
         private float _startPositionY;
         private float _endPositionY;
         private float _movingSpeedY;
@@ -13,33 +15,26 @@ namespace ShootEmUp {
         private float _positionZ;
 
         public void FinishGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
         public void OnPauseGame() {
-            enabled = false;
+            _isEnable = false;
         }
 
         public void OnResumeGame() {
-            enabled = true;
+            _isEnable = true;
         }
 
         public void OnStartGame() {
-            enabled = true;
+            _isEnable = true;
         }
 
-        private void Awake() {
-            _startPositionY = _params._startPositionY;
-            _endPositionY = _params._endPositionY;
-            _movingSpeedY = _params._movingSpeedY;
-            _myTransform = transform;
-            var position = _myTransform.position;
-            _positionX = position.x;
-            _positionZ = position.z;
-            enabled = false;
-        }
+        public void UpdateGame(float time) {
+            if (!IsEnable) {
+                return;
+            }
 
-        private void Update() {
             if (_myTransform.position.y <= _endPositionY) {
                 _myTransform.position = new Vector3(
                     _positionX,
@@ -53,6 +48,17 @@ namespace ShootEmUp {
                 _movingSpeedY * Time.deltaTime,
                 _positionZ
             );
+        }
+
+        private void Awake() {
+            _startPositionY = _params._startPositionY;
+            _endPositionY = _params._endPositionY;
+            _movingSpeedY = _params._movingSpeedY;
+            _myTransform = transform;
+            var position = _myTransform.position;
+            _positionX = position.x;
+            _positionZ = position.z;
+            enabled = false;
         }
 
         [Serializable]

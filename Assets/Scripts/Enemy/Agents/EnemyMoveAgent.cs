@@ -2,13 +2,16 @@ using System;
 using UnityEngine;
 
 namespace ShootEmUp {
-    public sealed class EnemyMoveAgent : MonoBehaviour, IRebootComponent {
+    public sealed class EnemyMoveAgent : MonoBehaviour, IRebootComponent, IFixedUpdateListner {
         [SerializeField] private MoveComponent moveComponent;
 
         public event Action OnReached;
         private Vector2 _destination;
         private bool _isReached;
         private float _minimalDistance = 0.25f;
+
+        public bool IsEnable => _isEnable;
+        private bool _isEnable = true;
 
         public void SetDestination(Vector2 endPoint) {
             _destination = endPoint;
@@ -18,8 +21,8 @@ namespace ShootEmUp {
             _isReached = false;
         }
 
-        private void FixedUpdate() {
-            if (_isReached) {
+        public void FixedUpdateGame(float time) {
+            if (_isReached || !IsEnable) {
                 return;
             }
 
