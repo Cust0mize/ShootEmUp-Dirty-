@@ -15,11 +15,7 @@ namespace ShootEmUp{
         }
 
         public void OnUpdateGame(float deltaTime){
-            if (!_canAttack){
-                return;
-            }
-
-            if (!_target.IsHitPointsExists()){
+            if (!_canAttack || !_target.IsHitPointsExists()){
                 return;
             }
 

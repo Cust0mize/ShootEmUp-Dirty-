@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyManager: {fileID: 562298205}
-  _spawnCooldown: 1
+  _spawnCooldown: 3
 --- !u!4 &103632962
 Transform:
   m_ObjectHideFlags: 0
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   _timerText: {fileID: 1695528997}
   _gameManager: {fileID: 3951702117947426123}
   _startGameButton: {fileID: 296623592}
-  _launchCooldown: 3
+  _launchCooldown: 1
 --- !u!114 &3951702117947426127
 MonoBehaviour:
   m_ObjectHideFlags: 0

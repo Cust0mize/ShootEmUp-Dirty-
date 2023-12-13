@@ -8,7 +8,7 @@ namespace ShootEmUp{
         [SerializeField] private GameObject _prefab;
         [SerializeField] private int _pullSize = 7;
 
-        private readonly Queue<GameObject> _enemyPool = new();
+        private Queue<GameObject> _enemyPool = new();
 
         private void Awake(){
             for (int i = 0; i < _pullSize; i++){
@@ -18,13 +18,12 @@ namespace ShootEmUp{
         }
 
         public bool TryGetEnemy(out GameObject enemy){
-            if (_enemyPool.TryDequeue(out enemy)){
-                enemy = Instantiate(_prefab, _container);
-                _enemyInstaller.InstallEnemy(enemy);
-                return true;
+            if (!_enemyPool.TryDequeue(out enemy)){
+                return false;
             }
 
-            return false;
+            enemy = _enemyInstaller.InstallEnemy(enemy);
+            return true;
         }
 
         public void UnSpawnEnemy(GameObject enemy){
