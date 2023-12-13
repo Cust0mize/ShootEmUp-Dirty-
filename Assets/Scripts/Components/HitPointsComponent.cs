@@ -23,7 +23,7 @@ namespace ShootEmUp {
             }
         }
 
-        public void SetDefaultValue() {
+        public void Reboot() {
             _hitPoints = _startHitPointsValue;
         }
     }

@@ -1,14 +1,11 @@
-﻿using UnityEngine;
-using ShootEmUp;
+﻿using ShootEmUp;
+using UnityEngine;
 
-namespace Character {
-    public sealed class CharacterMoveController : MonoBehaviour, IFixedUpdateListner {
+namespace Controllers {
+    public sealed class CharacterMoveAgent : MonoBehaviour, IFixedUpdateListener {
         [SerializeField] private GameObject _characterGO;
         private MoveComponent _moveComponent;
         private float _moveDirection;
-
-        public bool IsEnable => _isEnable;
-        private bool _isEnable = true;
 
         private void Start() {
             _moveComponent = _characterGO.GetComponent<MoveComponent>();
@@ -18,11 +15,7 @@ namespace Character {
             _moveDirection = horizontalDirectional;
         }
 
-        public void FixedUpdateGame(float time) {
-            if (!IsEnable) {
-                return;
-            }
-
+        public void OnFixedUpdateGame(float fixedDeltaTime) {
             _moveComponent.MoveByRigidbodyVelocity(new Vector2(_moveDirection, Vector2.zero.y));
         }
     }

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using ShootEmUp;
+using UnityEngine;
 
-namespace ShootEmUp {
+namespace Controllers {
     public class EnemyCompliteMoveObserver : MonoBehaviour {
         [SerializeField] private EnemyAttackAgent _enemyAttackAgent;
         [SerializeField] private EnemyMoveAgent _enemyMoveAgent;

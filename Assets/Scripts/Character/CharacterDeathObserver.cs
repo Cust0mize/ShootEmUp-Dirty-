@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using ShootEmUp;
+using UnityEngine;
 
-namespace ShootEmUp {
-    public class EndGameController : MonoBehaviour {
+namespace Controllers {
+    public class CharacterDeathObserver : MonoBehaviour {
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private GameObject _characterGO;
 

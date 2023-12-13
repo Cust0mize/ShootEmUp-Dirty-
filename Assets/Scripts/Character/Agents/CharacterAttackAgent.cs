@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using ShootEmUp;
+﻿using ShootEmUp;
+using UnityEngine;
 
-namespace Character {
-    public class CharacterWeaponController : MonoBehaviour {
+namespace Controllers {
+    public class CharacterAttackAgent : MonoBehaviour {
         [SerializeField] private BulletConfig _bulletConfig;
         [SerializeField] private GameObject _characterGO;
         private BulletSystem _bulletSystem;
