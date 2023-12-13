@@ -1,13 +1,15 @@
 ﻿using System.Collections;
-using UnityEngine.UI;
-using UnityEngine;
+using ShootEmUp;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace ShootEmUp {
-    public class StartGameController : MonoBehaviour {
+namespace Controllers {
+    public class GameCooldownLauncher : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private GameManager _gameManager;
         [SerializeField] private Button _startGameButton;
+        [SerializeField] private float _launchCooldown = 3;
 
         private void Start() {
             _timerText.gameObject.SetActive(false);
@@ -21,7 +23,7 @@ namespace ShootEmUp {
         }
 
         private IEnumerator OnStartGame() {
-            float startTime = 3;
+            float startTime = _launchCooldown;
 
             while (startTime > 0) {
                 startTime -= Time.deltaTime;

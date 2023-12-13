@@ -10,9 +10,9 @@ namespace ShootEmUp {
             _rebootsComponents = transform.GetComponents<IRebootComponent>().ToList();
         }
 
-        public void SetDefaultValue() {
+        public void RebootComponents() {
             foreach (var item in _rebootsComponents) {
-                item.SetDefaultValue();
+                item.Reboot();
             }
         }
     }

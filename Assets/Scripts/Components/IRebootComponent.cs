@@ -1,5 +1,5 @@
 ﻿namespace ShootEmUp {
     public interface IRebootComponent {
-        public void SetDefaultValue();
+        public void Reboot();
     }
 }

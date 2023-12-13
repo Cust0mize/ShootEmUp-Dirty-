@@ -1,5 +1,5 @@
 ﻿namespace ShootEmUp {
-    public interface IDestroyToBorder {
+    public interface IDestroyableOnBorder {
         public void Destroy();
     }
 }

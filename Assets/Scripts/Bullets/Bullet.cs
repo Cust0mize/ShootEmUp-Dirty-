@@ -2,11 +2,11 @@ using UnityEngine;
 using System;
 
 namespace ShootEmUp {
-    public sealed class Bullet : MonoBehaviour, IDestroyToBorder, IGamePauseListner, IResumeGameListner, IFinishGameListner {
+    public sealed class Bullet : MonoBehaviour, IDestroyableOnBorder, IGamePauseListener, IResumeGameListener, IFinishGameListener {
         public event Action<Bullet> OnCollisionEntered;
 
-        public bool IsPlayer { get; private set; }
-        public int Damage { get; private set; }
+        private bool _isPlayer;
+        private int _damage;
 
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -16,12 +16,12 @@ namespace ShootEmUp {
         public void Init(BulletConfig bulletConfig) {
             gameObject.layer = (int)bulletConfig.PhysicsLayer;
             _spriteRenderer.color = bulletConfig.Color;
-            IsPlayer = bulletConfig.IsPlayer;
+            _isPlayer = bulletConfig.IsPlayer;
             _speedMove = bulletConfig.Speed;
-            Damage = bulletConfig.Damage;
+            _damage = bulletConfig.Damage;
         }
 
-        public void SetVelosity(Vector3 velocity) {
+        public void SetVelocity(Vector3 velocity) {
             _rigidbody2D.velocity = velocity * _speedMove;
         }
 
@@ -40,7 +40,7 @@ namespace ShootEmUp {
             _rigidbody2D.isKinematic = false;
         }
 
-        public void FinishGame() {
+        public void OnFinishGame() {
             OnCollisionEntered?.Invoke(this);
         }
 
@@ -49,12 +49,12 @@ namespace ShootEmUp {
                 return;
             }
 
-            if (IsPlayer == team.IsPlayer) {
+            if (_isPlayer == team.IsPlayer) {
                 return;
             }
 
             if (collision.transform.TryGetComponent(out HitPointsComponent hitPoints)) {
-                hitPoints.TakeDamage(Damage);
+                hitPoints.TakeDamage(_damage);
             }
 
             Destroy();

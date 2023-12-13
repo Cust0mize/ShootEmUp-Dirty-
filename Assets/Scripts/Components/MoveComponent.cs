@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace ShootEmUp {
-    public sealed class MoveComponent : MonoBehaviour, IGamePauseListner, IResumeGameListner, IFinishGameListner {
+    public sealed class MoveComponent : MonoBehaviour, IGamePauseListener, IResumeGameListener, IFinishGameListener {
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private float _speed = 5.0f;
         private bool _isPause;
@@ -14,7 +14,7 @@ namespace ShootEmUp {
             _isPause = false;
         }
 
-        public void FinishGame() {
+        public void OnFinishGame() {
             _isPause = true;
         }
 

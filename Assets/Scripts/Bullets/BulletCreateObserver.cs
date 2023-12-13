@@ -6,15 +6,15 @@ namespace ShootEmUp {
         [SerializeField] private BulletPool _bulletPool;
 
         private void Awake() {
-            _bulletPool.OnBulletCreate += AddNewListner;
+            _bulletPool.OnBulletCreate += AddNewListener;
         }
 
-        private void AddNewListner(Bullet bullet) {
-            _gameManager.AddLisnter(bullet);
+        private void AddNewListener(Bullet bullet) {
+            _gameManager.AddListeners(bullet);
         }
 
         private void OnDestroy() {
-            _bulletPool.OnBulletCreate -= AddNewListner;
+            _bulletPool.OnBulletCreate -= AddNewListener;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ShootEmUp {
 
             bullet.Init(bulletConfig);
             bullet.SetPosition(position);
-            bullet.SetVelosity(direction);
+            bullet.SetVelocity(direction);
 
             if (_bulletsPool.ActiveBulletsAdd(bullet)) {
                 bullet.OnCollisionEntered += RemoveBullet;

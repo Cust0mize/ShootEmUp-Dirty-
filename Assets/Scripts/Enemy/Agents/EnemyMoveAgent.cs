@@ -1,39 +1,37 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp {
-    public sealed class EnemyMoveAgent : MonoBehaviour, IRebootComponent, IFixedUpdateListner {
-        [SerializeField] private MoveComponent moveComponent;
+    public sealed class EnemyMoveAgent : MonoBehaviour, IRebootComponent, IFixedUpdateListener {
+        [FormerlySerializedAs("moveComponent")] [SerializeField] private MoveComponent _moveComponent;
 
         public event Action OnReached;
         private Vector2 _destination;
         private bool _isReached;
-        private float _minimalDistance = 0.25f;
-
-        public bool IsEnable => _isEnable;
-        private bool _isEnable = true;
+        private const float MinimalDistance = 0.25f;
 
         public void SetDestination(Vector2 endPoint) {
             _destination = endPoint;
         }
 
-        public void SetDefaultValue() {
+        public void Reboot() {
             _isReached = false;
         }
 
-        public void FixedUpdateGame(float time) {
-            if (_isReached || !IsEnable) {
+        public void OnFixedUpdateGame(float fixedDeltaTime) {
+            if (_isReached) {
                 return;
             }
 
             var vector = _destination - (Vector2)transform.position;
-            if (vector.magnitude <= _minimalDistance) {
+            if (vector.magnitude <= MinimalDistance) {
                 _isReached = true;
                 OnReached?.Invoke();
                 return;
             }
 
-            moveComponent.MoveByRigidbodyVelocity(vector.normalized);
+            _moveComponent.MoveByRigidbodyVelocity(vector.normalized);
         }
     }
 }
