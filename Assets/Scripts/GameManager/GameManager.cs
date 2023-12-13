@@ -83,17 +83,15 @@ namespace ShootEmUp{
         }
 
         public void ResumeGame(){
-            if (_currentGameState != GameState.Playing){
+            if (_currentGameState != GameState.Paused){
                 return;
             }
-
-            if (_currentGameState != GameState.Playing){
-                return;
-            }
-
+            
             for (int i = 0; i < _resumeListeners.Count; i++){
                 _resumeListeners[i].OnResumeGame();
             }
+
+            _currentGameState = GameState.Playing;
         }
 
         private void Update(){
